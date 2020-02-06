@@ -11,7 +11,7 @@ import UIKit
 // 1: Create a protocol with the delegate name.
 // 2: Create a delegate property on the Delegator.
 // 3: When needed, call the delegate's method on the delegator.
-// 4: Set up the delegate.
+// 4: Go over to the delegate code file and set it up (below).
     // Adopt and conform to delegate's protocol.
     // Set self as delegate when AddFriendViewController is created.
 
@@ -29,21 +29,25 @@ class AddFriendViewController: UIViewController {
     @IBOutlet weak var hobby2TextField: UITextField!
     @IBOutlet weak var hobby3TextField: UITextField!
     
+    var delegate: AddFriendDelegate?
+    
+    // Step 2 - above
     // This object is a stand in for the TableView which is the actual delegate.
-    var delegate: AddFriendDelegate? // Step 2
     // We declared the protocol in this file, but this file does not CONFORM to this protocol.
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - IBActions
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil) // Typed in using autocomplete. 9pm
+        dismiss(animated: true, completion: nil)
     }
+    // Typed in using autocomplete. 9pm/pt4, 9:05/pt5
+    
+    
+    // Below is how you make a friend object.
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let name = nameTextField.text, // Making sure the user input something.
             let hometown = hometownTextField.text,
@@ -66,6 +70,11 @@ class AddFriendViewController: UIViewController {
             friend.hobbies.append(hobby3)
         }
         
-        delegate?.friendWasCreated(friend) // Step 3
+        delegate?.friendWasCreated(friend)
+        self.dismiss(animated: true, completion: nil)
+        
+        // Step 3
+        // Passes off the "friend" object to the delegate. So it is not longer responsbile for the delegate.
+        // Now we need to go to the delegate in order to pull this information over to that file. (This is MY understanding; not Johnny's words.)
     }
 }

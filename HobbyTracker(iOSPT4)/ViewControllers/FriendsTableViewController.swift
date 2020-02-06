@@ -44,12 +44,13 @@ class FriendsTableViewController: UIViewController, UITableViewDataSource, UITab
         return cell
     }
     
-    // We ask the delegate to
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddFriendModalSegue" {
             if let addFriendVC = segue.destination as? AddFriendViewController {
-                addFriendVC.delegate = self // Set this VC as the delegate for the Add friend VC
+                addFriendVC.delegate = self
             }
+            // Step "b" from below.
+            // Set this VC as the delegate for the Add Friend VC
         }
     }
 }
@@ -57,7 +58,13 @@ class FriendsTableViewController: UIViewController, UITableViewDataSource, UITab
 extension FriendsTableViewController: AddFriendDelegate {
     func friendWasCreated(_ friend: Friend) {
         friends.append(friend)
-        dismiss(animated: true, completion: nil)
         tableView.reloadData()
     }
+    //Step "a" from below.
+    
+    
+    // We come here right after step 3 on the delegator class (here meaning "AddFriendViewController").
+    // ...4: Go over to the delegate code file and set it up (below).
+        // a) Adopt and conform to delegate's protocol.
+        // b) Set self as delegate when AddFriendViewController is created.
 }
